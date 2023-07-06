@@ -12,5 +12,9 @@ namespace ElevatorSimulator.Core.Interfaces
         int FloorNumber { get; }
 
         void CallElevator();
+
+        List<int> BoardPassengers(int numPassengers);
+
+
     }
 }
