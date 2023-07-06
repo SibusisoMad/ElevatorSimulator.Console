@@ -1,9 +1,12 @@
 ﻿using ElevatorSimulator.Core.Interfaces;
+using ElevatorSimulator.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+
 
 namespace ElevatorSimulator.Core.Models
 {
@@ -34,7 +37,7 @@ namespace ElevatorSimulator.Core.Models
 
         public bool IsMoving => currentFloor != targetFloor;
 
-        public bool IsAvailable => NumPassengers < elevatorCapacity;
+        public bool IsAvailable() => NumPassengers < elevatorCapacity;
 
         public int DistanceFrom(int floorNumber) => Math.Abs(currentFloor - floorNumber);
 
@@ -47,21 +50,22 @@ namespace ElevatorSimulator.Core.Models
         {
             if (currentFloor == targetFloor)
             {
-                //check if elevator has passengers
+                // If elevator has passengers, let them off
                 if (passengers.Count > 0)
                 {
                     passengers.RemoveAll(p => p == currentFloor);
                     controller.Floors[currentFloor].NumWaiting += passengers.Count;
                 }
-                //check waiting passengers on currnt floor
+
+                // Check if there are passengers waiting on current floor
                 if (controller.Floors[currentFloor].NumWaiting > 0)
                 {
                     var numAvailable = elevatorCapacity - passengers.Count;
                     var numToBoard = Math.Min(numAvailable, controller.Floors[currentFloor].NumWaiting);
-
                     passengers.AddRange(controller.Floors[currentFloor].BoardPassengers(numToBoard));
                 }
 
+                // Determine next target floor
                 var target = -1;
                 var minDistance = int.MaxValue;
                 foreach (var floor in controller.Floors)
@@ -69,7 +73,6 @@ namespace ElevatorSimulator.Core.Models
                     if (floor.NumWaiting > 0)
                     {
                         var distance = DistanceFrom(floor.FloorNumber);
-
                         if (distance < minDistance)
                         {
                             minDistance = distance;

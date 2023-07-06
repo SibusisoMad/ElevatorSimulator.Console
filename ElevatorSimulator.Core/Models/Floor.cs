@@ -22,49 +22,48 @@ namespace ElevatorSimulator.Core.Models
         public int NumWaiting
         {
             get => waitingPassengers.Count;
-
             set
             {
                 if (value >= 0)
                 {
                     waitingPassengers.Clear();
-                    for (int i = 0; i < value; i++) ;
+                    for (int i = 0; i < value; i++)
                     {
                         waitingPassengers.Add(FloorNumber);
                     }
                 }
             }
         }
-         public int FloorNumber { get; }
+
+        public int FloorNumber { get; }
 
         public void CallElevator()
         {
-            var bestEvelator = -1;
+            var bestElevator = -1;
             var minDistance = int.MaxValue;
-            foreach ( var elevator in controller.Elevators)
+            foreach (var elevator in controller.Elevators)
             {
                 if (elevator.IsAvailable())
                 {
                     var distance = elevator.DistanceFrom(FloorNumber);
-                    
                     if (distance < minDistance)
                     {
                         minDistance = distance;
-                        bestEvelator = elevator.Id;
+                        bestElevator = elevator.Id;
                     }
                 }
             }
 
-            if (bestEvelator != -1)
+            if (bestElevator != -1)
             {
-                controller.Elevators[bestEvelator].GoTo(FloorNumber);
+                controller.Elevators[bestElevator].GoTo(FloorNumber);
             }
         }
 
-        public List<int> BoardPassengers(int numberPassengers)
+        public List<int> BoardPassengers(int numPassengers)
         {
             var toBoard = new List<int>();
-            for (int i = 0; i < numberPassengers && i < waitingPassengers.Count; i++)
+            for (int i = 0; i < numPassengers && i < waitingPassengers.Count; i++)
             {
                 toBoard.Add(waitingPassengers[i]);
             }

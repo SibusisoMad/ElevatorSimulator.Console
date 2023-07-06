@@ -10,7 +10,7 @@ namespace ElevatorSimulator.Core.Interfaces
     {
         int Id { get; }
         int CurrentFloor { get; }
-        int numPassengers { get; }
+        int NumPassengers { get; }
 
         string Direction { get; }
 

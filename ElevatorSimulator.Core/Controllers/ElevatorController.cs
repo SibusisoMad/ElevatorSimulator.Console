@@ -1,4 +1,5 @@
 ﻿using ElevatorSimulator.Core.Interfaces;
+using ElevatorSimulator.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace ElevatorSimulator.Core.Controllers
                 {
                     Console.WriteLine($"Elevator {elevator.Id} - Floor: {elevator.CurrentFloor}, " +
                         $"Direction: {elevator.Direction}, Moving: {elevator.IsMoving}, " +
-                        $"Passengers: {elevator.numPassengers}/{elevatorCapacity}");
+                        $"Passengers: {elevator.NumPassengers}/{elevatorCapacity}");
                 }
                 Console.WriteLine();
                 for (int i = 0; i < numFloors; i++)
